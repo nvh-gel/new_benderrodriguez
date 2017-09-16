@@ -1,0 +1,8 @@
+version: '2.0'
+
+services:
+  work:
+    image: work
+    build: ./bender
+    ports:
+      - 8888:8888
