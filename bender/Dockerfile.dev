@@ -1,0 +1,4 @@
+FROM newbenderrodriguez_web
+RUN pip install -r requirements.dev.txt
+ENTRYPOINT ["bash"]
+CMD ["gunicorn.sh"]

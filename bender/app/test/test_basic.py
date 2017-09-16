@@ -8,9 +8,12 @@ class BenderHomeUnitTest(unittest.TestCase):
     def setUp(self):
         super(BenderHomeUnitTest, self).setUp()
         app.testing = True
-        self.app = app()
+        self.app = app.test_client()
 
     def test_home_code(self):
         """ Test home response code, expect 200 """
         response = self.app.get('/')
         assert response.status_code == 200
+
+if __name__ == '__main__':
+    unittest.main()
