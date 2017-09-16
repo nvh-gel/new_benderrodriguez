@@ -1,8 +1,10 @@
 version: '2.0'
 
 services:
-  work:
-    image: work
+  web:
     build: ./bender
+    # dockerfile: Dockerfile
+    volumes:
+      - ./app:/src
     ports:
-      - 8888:8888
+      - 8383:8888

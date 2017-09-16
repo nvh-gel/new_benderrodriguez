@@ -1,5 +1,6 @@
-
-FROM docker/whalesay:latest
-LABEL Name=work Version=0.0.1 
-RUN apt-get -y update && apt-get install -y fortunes
-CMD /usr/games/fortune -a | cowsay
+FROM python
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+ENTRYPOINT ["bash"]
+CMD ["gunicorn.sh"]
