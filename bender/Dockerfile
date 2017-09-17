@@ -1,6 +1,7 @@
 FROM python
-COPY . /app
-WORKDIR /app
+RUN apt-get update && apt-get install -y supervisor
+ADD . /app
+ADD supervisord.conf /etc/supervisord.conf
+WORKDIR ./app
 RUN pip install -r requirements.txt
-ENTRYPOINT ["bash"]
-CMD ["gunicorn.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

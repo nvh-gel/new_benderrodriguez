@@ -1,5 +1,6 @@
 """ Main application """
 from flask import Flask
+from app.views.home import Home
 
 
 BENDER = Flask(__name__)
@@ -8,7 +9,7 @@ BENDER = Flask(__name__)
 @BENDER.route('/')
 def index():
     """ Homepage route """
-    return "Hello World.", 200
+    return Home().return_view(), 200
 
 
 if __name__ == "__main__":

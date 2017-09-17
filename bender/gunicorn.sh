@@ -1,1 +1,0 @@
-gunicorn -b :8888 app.app:BENDER
