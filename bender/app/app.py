@@ -13,4 +13,4 @@ def index():
 
 
 if __name__ == "__main__":
-    BENDER.run(debug=True, host='0.0.0.0')
+    BENDER.run(host='0.0.0.0')
