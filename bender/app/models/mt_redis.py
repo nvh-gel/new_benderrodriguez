@@ -1,6 +1,6 @@
 from redis import Redis
 from redis import exceptions
-from mt_config import get_config_section
+from models.mt_config import MTConfig
 
 
 class MTRedis(object):
@@ -8,6 +8,6 @@ class MTRedis(object):
 
     def get_redis(self):
         if not self._redis:
-            redis_config = get_config_section('redis')
+            redis_config = MTConfig().get_config_section('redis')
             self._redis = Redis(redis_config['host'], redis_config['port'])
         return self._redis
