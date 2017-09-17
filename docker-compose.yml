@@ -9,6 +9,9 @@ services:
       - .:/code
     ports:
       - 8383:8888
+    environment:
+      APP_ENV: 'dev'
+      ASYNC: false
 
   # test:
   #   build:
