@@ -1,4 +1,7 @@
 FROM newbenderrodriguez_web:latest
+MAINTAINER Hien Nguyen <hien.nguyen@lazada.com>
 RUN pip install -r requirements.dev.txt
-ENTRYPOINT ["bash"]
-CMD ["gunicorn.sh"]
+ADD . /app
+ADD supervisord.conf /etc/supervisord.conf
+WORKDIR /app
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

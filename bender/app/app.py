@@ -1,6 +1,7 @@
 """ Main application """
 from flask import Flask
-from app.views.home import Home
+from views.home import Home
+from views.config import Config
 
 
 BENDER = Flask(__name__)
@@ -12,5 +13,11 @@ def index():
     return Home().return_view(), 200
 
 
+@BENDER.route('/config')
+def config():
+    """ Config route """
+    return Config().return_view(), 200
+
+
 if __name__ == "__main__":
-    BENDER.run(host='0.0.0.0')
+    BENDER.run(host='0.0.0.0', port=8888)

@@ -3,12 +3,12 @@ version: '2.0'
 services:
   redis:
     image: redis
-  web:
+  web: &web-base
     build:
       context: ./bender
       dockerfile: Dockerfile
     volumes:
-      - .:/code
+      - ./bender:/app
     ports:
       - 8383:8888
     environment:
@@ -17,12 +17,10 @@ services:
       REDIS_URL: 'redis://redis:6379/1'
     links:
       - redis
-
-  # test:
-  #   build:
-  #     context: ./bender
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./app:/src
-  #   ports:
-  #     - 8384:8888
+  test:
+    <<: *web-base
+    build:
+      context: ./bender
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8384:8888
