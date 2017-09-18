@@ -1,5 +1,4 @@
 FROM newbenderrodriguez_web:latest
-MAINTAINER Hien Nguyen <hien.nguyen@lazada.com>
 RUN pip install -r requirements.dev.txt
 ADD . /app
 ADD supervisord.conf /etc/supervisord.conf
