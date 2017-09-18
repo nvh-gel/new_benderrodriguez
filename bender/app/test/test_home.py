@@ -1,6 +1,6 @@
 """ Test basic page """
 import unittest
-from app import BENDER as app
+from app.app import BENDER as app
 
 
 class BenderHomeUnitTest(unittest.TestCase):
@@ -15,10 +15,10 @@ class BenderHomeUnitTest(unittest.TestCase):
         response = self.app.get('/')
         assert response.status_code == 200
 
-    # def test_home_response(self):
-    #     """ Test home page response, exect content """
-    #     response = self.app.get('/')
-    #     assert "Hello world" in response.text
+    def test_home_response(self):
+        """ Test home page response, expect html content """
+        response = self.app.get('/')
+        assert response.headers['content-type'] == "text/html; charset=utf-8"
 
 
 if __name__ == '__main__':

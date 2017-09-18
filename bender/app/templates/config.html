@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
+<!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+<!-- <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+<!-- <script type="text/javascript" src="/static/js/vendor/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="static/js/materialize.min.js"></script> -->
+<div class="container">
+    <ul class="collapsible" data-collapsible="accordion">
+        {% for section in config %}
+            <li>
+                <div class="collapsible-header"><b>{{section}}</b></div>
+                {% for record in config[section] %}
+                    <div class="collapsible-body"><span>{{record}}: {{config[section][record]}}</span></div>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
