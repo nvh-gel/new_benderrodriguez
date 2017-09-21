@@ -29,8 +29,8 @@ def config_json():
 @BENDER.route('/opsgenie', methods=['POST'])
 def send_to_opsgenie():
     """ Allow posted payload from Opsgenie """
-    payload = request.get_json()
-    return Opsgenie().return_view(payload)
+    payload = request.get_json(force=True)
+    return Opsgenie().return_view(payload=payload)
 
 if __name__ == "__main__":
     BENDER.run(debug=True, host='0.0.0.0', port=8888)

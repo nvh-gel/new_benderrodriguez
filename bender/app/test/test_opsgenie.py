@@ -38,6 +38,56 @@ class BenderOpsgenieUnitTest(unittest.TestCase):
         response = self.app.post('/opsgenie', data=json.dumps(payload))
         assert response.status_code == 400
 
+    def test_opsgenie_without_alert(self):
+        """ Test post with payload not contain alert """
+        payload = {
+            "action": "addnote"
+        }
+        response = self.app.post('/opsgenie', data=json.dumps(payload))
+        assert response.status_code == 400
+
+    def test_opsgenie_valid_create(self):
+        """ Test post with valid create payload """
+        payload = {
+            "action": "Create",
+            "alert": {
+                "alertId": "89b47797-bb11-4fc1-b611-492cb841e503",
+                "alertType": 0,
+                "alias": "Node 10.84.0.2:5550 for service i18n_api SG went down",
+                "createdAt": 1506008195937,
+                "entity": "",
+                "insertedAt": 1506008195937000103,
+                "message": " Node 10.84.0.2:5550 for service i18n_api SG went down",
+                "priority": 2,
+                "recipients": [],
+                "source": "103.56.127.16",
+                "tags": [
+                "P0",
+                "LIVE"
+                ],
+                "teams": [],
+                "tinyId": "1851",
+                "updatedAt": 1506008195937000103,
+                "userFullName": "System",
+                "userId": "",
+                "username": "System"
+            },
+            "alertFlowContext": {
+                "content": {},
+                "requestId": "9387e622-33f1-403c-863b-f1af245796b9",
+                "traceId": "9387e622-33f1-403c-863b-f1af245796b9"
+            },
+            "integrationId": "45b429ca-da65-4700-bb4c-aa3b4aacfce2",
+            "integrationName": "MT Bender Rodriguez OUT",
+            "integrationType": "Webhook",
+            "source": {
+                "name": "",
+                "type": "API"
+            }
+        }
+        response = self.app.post('/opsgenie', data=json.dumps(payload))
+        assert response.status_code == 202
+
 
 if __name__ == '__main__':
     unittest.main()
