@@ -1,7 +1,8 @@
 """ Main application """
-from flask import Flask
+from flask import Flask, request
 from app.views.home import Home
 from app.views.config import Config
+from app.views.opsgenie import Opsgenie
 
 
 BENDER = Flask(__name__)
@@ -21,8 +22,15 @@ def config():
 
 @BENDER.route('/config/json', methods=['GET'])
 def config_json():
+    """ Return config in json """
     return Config().return_json_view(), 200
 
+
+@BENDER.route('/opsgenie', methods=['POST'])
+def send_to_opsgenie():
+    """ Allow posted payload from Opsgenie """
+    payload = request.get_json()
+    return Opsgenie().return_view(payload)
 
 if __name__ == "__main__":
     BENDER.run(debug=True, host='0.0.0.0', port=8888)
