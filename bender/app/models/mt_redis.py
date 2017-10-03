@@ -1,6 +1,6 @@
 from redis import Redis
-from redis import exceptions
-from models.mt_config import MTConfig
+# from redis import exceptions
+from app.models.mt_config import MTConfig
 
 
 class MTRedis(object):

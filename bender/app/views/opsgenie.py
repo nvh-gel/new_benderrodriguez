@@ -1,5 +1,5 @@
 """ View for Opsgenie """
-from app.controllers.mt_opsgenie_handler import mt_opsgenie_queue
+from app.controllers.mt_opsgenie_handler import MTOpsgenieHandler
 
 
 class Opsgenie(object):
@@ -7,6 +7,9 @@ class Opsgenie(object):
     def return_view(self, payload=None):
         """ Return status message for posted request to opsgenie route """
         if not payload:
-            return "Bad request!", 400
+            return "Bad request!\n", 400
         else:
-            return mt_opsgenie_queue(payload)
+            try:
+                return MTOpsgenieHandler().mt_opsgenie_queue(payload)
+            except KeyError:
+                return "Bad request!\n", 400

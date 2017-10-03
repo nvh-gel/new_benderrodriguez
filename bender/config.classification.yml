@@ -1,0 +1,25 @@
+default: &default
+  project: BUG
+  issuetype: Bug
+  component: 911
+  priority: P1
+  team: ''
+classification:
+  - free disk space:
+      default: &def_free_space
+        <<: *default
+        component: Infrastructure
+        team: 'infra_system_team_tier_1'
+      details:
+        - stg:
+            <<: *def_free_space
+            priority: P2
+            team: 'z_infra_auto_alerting'
+        - db:
+            <<: *def_free_space
+            team: 'infra_db_team'
+  - queue is having:
+    - product_import:
+        <<: *default
+        component: Product Import
+        team: 'v_Search_Product_Import'

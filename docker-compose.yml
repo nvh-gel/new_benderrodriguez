@@ -12,6 +12,7 @@ services:
     ports:
       - 8383:8888
     environment:
+      LOG_LEVEL: 'INFO'
       APP_ENV: 'dev'
       ASYNC: 0
       REDIS_URL: 'redis://redis:6379/1'

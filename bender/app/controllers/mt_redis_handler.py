@@ -1,5 +1,5 @@
 """ Handle redis connection """
-from models.mt_redis import MTRedis
+from app.models.mt_redis import MTRedis
 
 
 REDIS = None

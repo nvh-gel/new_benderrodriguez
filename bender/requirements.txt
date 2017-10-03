@@ -1,6 +1,7 @@
-Flask
+flask
 gunicorn
 redis
 rq
 pyyaml
-requests
+jira
+opsgenie-sdk

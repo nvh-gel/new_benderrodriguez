@@ -1,6 +1,5 @@
 FROM newbenderrodriguez_web:latest
-RUN pip install -r requirements.dev.txt
-ADD . /app
-ADD supervisord.conf /etc/supervisord.conf
 WORKDIR /app
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+RUN pip install -r requirements.dev.txt
+ENTRYPOINT [ "gunicorn" ]
+CMD [ "-c", "gunicorn.conf", "app.app:BENDER" ]

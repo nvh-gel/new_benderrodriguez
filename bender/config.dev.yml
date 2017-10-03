@@ -1,3 +1,9 @@
 redis:
   host: redis
   port: 6379
+jira:
+  host: https://edenera.atlassian.net
+  id: vanhien27031988@gmail.com
+  password: asd66651376
+opsgenie:
+  apikey: 5e81c312-2f6f-4f49-ad4b-56e9627325bd
