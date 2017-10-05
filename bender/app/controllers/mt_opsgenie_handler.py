@@ -1,9 +1,10 @@
 """ Handler for opsgenie """
 # from app.controllers.mt_queue_handler import MTQueueHandler
+import sys
 from app.controllers.mt_jira_handler import MTJIRAHandler
 from app.controllers.mt_utils import classify_issue
 from app.models.mt_opsgenie import MTOpsgenie
-
+from app.controllers.mt_io import print_stderr
 
 class MTOpsgenieHandler(object):
     """ handling all opsgenie request """
@@ -13,10 +14,10 @@ class MTOpsgenieHandler(object):
             alert = payload['alert']
             action = 'opsgenie_' + payload['action'].lower()
             # MTQueueHandler().enqueue(action, alert)
-            self.__getattribute__(action)(alert)
+            return self.__getattribute__(action)(alert)
         except KeyError as exc:
             raise exc
-        return "Accepted.\n", 202
+        # return "Accepted.\n", 202
 
     def opsgenie_create(self, alert=None):
         """ handle opsgenie alert created event """
@@ -26,17 +27,19 @@ class MTOpsgenieHandler(object):
         """ handle opsgenie alert add to jira event """
         try:
             classified_dict = classify_issue(alert['message'])
-            opsgenie_alert = MTOpsgenieHandler().get_alert(id=alert['alertId'])
+            opsgenie_alert = MTOpsgenieHandler().get_alert(alert_id=alert['alertId'])
             description = opsgenie_alert['description']
         except KeyError:
             return "Internal Error.\n", 500
-        MTJIRAHandler().create_jira_ticket(alert['message'],
-                                           component=classified_dict['component'],
-                                           priority=classified_dict['priority'],
-                                           labels=['push'],
-                                           description=description,
-                                           opsgenie_alert=alert['alias']
-                                          )
+        new_ticket = MTJIRAHandler().create_jira_ticket(alert['message'],
+                                                        component=classified_dict['component'],
+                                                        priority=classified_dict['priority'],
+                                                        labels=['push'],
+                                                        description=description,
+                                                        opsgenie_alert=alert['alias']
+                                                       )
+        print_stderr(new_ticket)
+        return self.add_tags(alert_id=alert['alertId'], tags=[new_ticket])
 
     def get_alert(self, *args, **kwargs):
         """ get opsgenie alert from either id, tiny id or alias """

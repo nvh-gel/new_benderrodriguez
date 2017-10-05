@@ -89,45 +89,45 @@ class BenderOpsgenieUnitTest(TestCase):
     #     response = self.app.post('/opsgenie', data=json.dumps(payload))
     #     assert response.status_code == 202
 
-    # def test_addtojira_payload(self):
-        # """ test post add to jira payload to /opsgenie """
-        # payload = {
-        #     "action": "AddToJIRA",
-        #     "actorUserId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
-        #     "alert": {
-        #         "alertId": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5",
-        #         "alertType": 0,
-        #         "alias": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5",
-        #         "createdAt": 1506933923196,
-        #         "entity": "",
-        #         "insertedAt": 1506933923196000109,
-        #         "message": "[Zabbix] mylzdlivemtdb1.shdc - Free disk space is less than 12% on volume /",
-        #         "priority": 2,
-        #         "source": "Zabbix",
-        #         "tags": [],
-        #         "tinyId": "6757",
-        #         "updatedAt": 1506933926998113946,
-        #         "userFullName": "Hien Nguyen",
-        #         "userId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
-        #         "username": "nvhien2703@outlook.com"
-        #     },
-        #     "alertFlowContext": {
-        #         "content": {
-        #         "alertId": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5"
-        #         },
-        #         "requestId": "c37b8957-6e7e-4cb8-856e-04a7a5e1deb8",
-        #         "traceId": "c37b8957-6e7e-4cb8-856e-04a7a5e1deb8"
-        #     },
-        #     "integrationId": "45b429ca-da65-4700-bb4c-aa3b4aacfce2",
-        #     "integrationName": "MT Bender Rodriguez OUT",
-        #     "integrationType": "Webhook",
-        #     "source": {
-        #         "name": "",
-        #         "type": "web"
-        #     }
-        # }
-        # response = self.app.post('/opsgenie', data=json.dumps(payload))
-        # assert response.status_code == 202
+    def test_addtojira_payload(self):
+        """ test post add to jira payload to /opsgenie """
+        payload = {
+            "action": "AddToJIRA",
+            "actorUserId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
+            "alert": {
+                "alertId": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5",
+                "alertType": 0,
+                "alias": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5",
+                "createdAt": 1506933923196,
+                "entity": "",
+                "insertedAt": 1506933923196000109,
+                "message": "[Zabbix] mylzdlivemtdb1.shdc - Free disk space is less than 12% on volume /",
+                "priority": 2,
+                "source": "Zabbix",
+                "tags": [],
+                "tinyId": "6757",
+                "updatedAt": 1506933926998113946,
+                "userFullName": "Hien Nguyen",
+                "userId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
+                "username": "nvhien2703@outlook.com"
+            },
+            "alertFlowContext": {
+                "content": {
+                "alertId": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5"
+                },
+                "requestId": "c37b8957-6e7e-4cb8-856e-04a7a5e1deb8",
+                "traceId": "c37b8957-6e7e-4cb8-856e-04a7a5e1deb8"
+            },
+            "integrationId": "45b429ca-da65-4700-bb4c-aa3b4aacfce2",
+            "integrationName": "MT Bender Rodriguez OUT",
+            "integrationType": "Webhook",
+            "source": {
+                "name": "",
+                "type": "web"
+            }
+        }
+        response = self.app.post('/opsgenie', data=json.dumps(payload))
+        assert response == 202
 
     def test_get_opsgenie_alert_by_id(self):
         """ Test get alert from opsgenie by id, expect dict """

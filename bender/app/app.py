@@ -3,6 +3,7 @@ from flask import Flask, request
 from app.views.home import Home
 from app.views.config import Config
 from app.views.opsgenie import Opsgenie
+from app.controllers.mt_io import print_stderr
 
 
 BENDER = Flask(__name__)
@@ -11,6 +12,7 @@ BENDER = Flask(__name__)
 @BENDER.route('/')
 def index():
     """ Homepage route """
+    print_stderr('home route')
     return Home().return_view(), 200
 
 

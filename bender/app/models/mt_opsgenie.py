@@ -2,7 +2,7 @@
 from opsgenie.swagger_client import AlertApi
 from opsgenie.swagger_client import configuration
 from opsgenie.swagger_client.rest import ApiException
-from opsgenie.swagger_client.models import *
+from opsgenie.swagger_client.models import AddAlertTagsRequest
 from app.controllers.mt_config_handler import MTConfigHandler
 
 
