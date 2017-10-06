@@ -22,7 +22,7 @@ class MTOpsgenie(object):
         """ Get opsgenie alert from given alert ID """
         try:
             response = AlertApi().get_alert(identifier=alert_id)
-            return response.data.__dict__
+            return response.data
         except ApiException as err:
             raise err
 
@@ -30,7 +30,7 @@ class MTOpsgenie(object):
         """ Get opsgenie alert from given tiny ID """
         try:
             response = AlertApi().get_alert(identifier=tiny_id, identifier_type='tiny')
-            return response.data.__dict__
+            return response.data
         except ApiException as err:
             raise err
 
@@ -38,7 +38,7 @@ class MTOpsgenie(object):
         """ Get Opsgenie alert from given alias """
         try:
             response = AlertApi().get_alert(identifier=alias, identifier_type='alias')
-            return response.data.__dict__
+            return response.data
         except ApiException as err:
             raise err
 
