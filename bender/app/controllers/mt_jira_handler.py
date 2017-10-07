@@ -8,10 +8,10 @@ class MTJIRAHandler(object):
     def get_jira(self):
         """ if jira is not set, init one, else return jira """
         if not self._jira:
-            self._jira = MTJIRA().get_jira()
+            self._jira = MTJIRA()
         return self._jira
 
-    def create_jira_ticket(self, summary, *args, **kwargs):
+    def create_jira_ticket(self, summary, **kwargs):
         """ create jira ticket from given params """
         issue_dict = {
             'project': {
@@ -27,6 +27,6 @@ class MTJIRAHandler(object):
             'description': kwargs['description'] if 'description' in kwargs else ""
         }
         for key, value in kwargs.items():
-            if 'custom_field' in key:
+            if 'custom' in key:
                 issue_dict[key] = value
-        return MTJIRA().create_jira_ticket(issue_dict)
+        return self.get_jira().create_jira_ticket(issue_dict)
