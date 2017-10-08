@@ -1,25 +1,194 @@
-default: &default
-  project: BUG
-  issuetype: Bug
-  component: 911
-  priority: P1
-  team: ''
 classification:
-  - free disk space:
-      default: &def_free_space
-        <<: *default
-        component: Infrastructure
-        team: 'infra_system_team_tier_1'
-      details:
-        - stg:
-            <<: *def_free_space
-            priority: P2
-            team: 'z_infra_auto_alerting'
-        - db:
-            <<: *def_free_space
-            team: 'infra_db_team'
-  - queue is having:
-    - product_import:
-        <<: *default
-        component: Product Import
-        team: 'v_Search_Product_Import'
+  default: &default
+    project: BUG
+    issuetype: Bug
+    component: 911
+    priority: P1
+    team: ''
+  details:
+    - free disk space:
+        default: &def_infra
+          <<: *default
+          component: Infrastructure
+          team: 'infra_system_team_tier_1'
+        default_db: &def_infra_db
+          <<: &def_infra
+          team: infra_db_team
+        details:
+          - stg:
+              default: &def_infra_auto_ticketing
+                <<: *def_infra
+                priority: P2
+                team: z_infra_auto_alerting
+          - dbdev:
+              default: *def_infra_auto_ticketing
+          - hkdc-srv-01067.lzd.io:
+              default: *def_infra_db
+          - backup:
+              default: *def_infra_db
+          - livecas:
+              default: *default
+                team: z_cas_alerting
+          - pgpool:
+              default: *def_infra_db
+          - biliveora:
+              default: *default
+                component: BI
+                team: h_bi_oracle
+          - bilivegp:
+              default: *default
+                component: BI
+                team: h_bi_greenplum
+          - lzdlivebi:
+              default: *def_infra_db
+          - platform:
+              default: *default
+                component: Platform
+                team: Performance_testing_team
+          - anon:
+              default: *def_infra_db
+                priority: P2
+                team: z_infra_auto_alerting
+          - sapstorage:
+              default:
+                <<: *def_infra
+                team: ''
+          - lellive:
+              default: *default
+                component: LEL
+                team: lel_Release
+          - omsliveweb:
+              default: *default
+                component: Vertical - Order mgmt & returns
+                team: v_OM_Returns_Procurement
+              details:
+                - volume /$: *def_infra
+          - ops-db-02.lazada.com:
+              default:
+                <<: *default
+                component: Notifications / Tracking
+                team: h_Nms
+              details:
+                - volume /$: *def_infra
+          - db: *def_infra_db
+    - mysql:
+    - connection:
+    - consumer: &def_rmq
+        default: *default
+        details:
+          - catalog_tax_class:
+              default: *default
+                team: v_ShippingFree
+                component: Vertical - ShippingFree
+          - orderprocessing.cybersource:
+              default: *def_infra
+          - oms.stock: &def_stock_api
+              default: *default
+                team: h_GeoAPI_StockAPI_PHPConsumer
+                component: STOCK API
+          - oms.warehouse: *def_stock_api
+          - product_service: &def_product_service
+              default: *def_stock_api
+                component: Product Service
+                team: h_ProductService_ImageStorage_Notificator_Scapi
+          - sellercenter: *def_product_service
+          - scapi: *def_product_service
+          - orderapi:
+              default: *default
+                component: Horizontal - APIs
+                team: h_OrderAPI
+          - email_api:
+              default: *default
+                component: Horizontal - APIs
+                team: h_CustomerAPI_ConfigAPI
+          - bob:
+              default: *def_infra
+          - alipay:
+              default: *default
+                component: Alipay
+                team: z_Alipay_auto_alerts_team
+          - distributed:
+              default: *default
+                component: Horizontal - Tracking
+                team: ''
+          - productfeed:
+              default: *default
+                team: 911_monitoring_team
+          - notificator: *def_product_service
+          - orderprocessing:
+              default: *default
+                component: Vertical - Order mgmt & returns
+                team: v_OM_Returns_Procurement
+          - product_import: &def_product_import
+              default: *default
+                component: Product Import
+                team: v_Search_product_import
+          - cc: *def_product_import
+          - elasticsearch: &def_search
+              default: *default
+                component: Vertical - Search
+                team: v_Search_backend
+          - ha3: *def_search
+          - _update: *def_search
+          - lms:
+              default: *default
+                component: LMS
+                team: h_Lms
+          - oms: &def_oms
+              default: *default
+                component: Vertical - Order mgmt & returns
+                team: v_OM_Returns_Procurement
+          - homer: *def_oms
+    - queue is having: *def_rmq
+    - ack_rate: *def_rmq
+    - php-fpm:
+    - postgresql:
+    - puppet:
+    - sybase:
+    - dbdev:
+    - zabbix agent:
+    - 10g:
+    - ilo:
+        default: *def_infra
+          team: z_infra_auto_alerting
+          priority: P2
+    - icmp:
+    - memory:
+        default: *def_infra
+        details:
+          - anon:
+              default: *def_infra_db
+                team: z_infra_auto_alerting
+                priority: P2
+          - c360liveautostatsapp:
+              default: *default
+                team: h_bi
+                component: BI
+          - hkdc-srv-01067.lzd.io:
+              default: *def_infra_db
+          - platform:
+              default: *default
+                team: Performance_testing_team
+                component: Platform
+          - db:
+              default: *def_infra_db
+    - alice health:
+    - replication:
+    - slave:
+    - slow queries:
+    - dead rabbit:
+    - backup:
+    - processor load:
+    - cpu:
+    - inode:
+    - jsagent:
+    - packagist:
+    - notification tools:
+    - pgpool:
+    - processes:
+    - rsyslog:
+    - walsreceiver:
+    - es cluster:
+    - docker daemon:
+    - could not connect:
+    - no reachable:

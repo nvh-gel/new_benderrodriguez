@@ -80,6 +80,15 @@ class MTOpsgenieHandler(object):
         }
         return jira_dict
 
+    def opsgenie_addnote(self, alert=None):
+        """ Handle add note event """
+        note = alert['note']
+        user = alert['userFullName']
+        comment = "*{} comment via Opsgenie:*\n{{quote}}{}{{quote}}".format(user, note)
+        jira_ticket = get_jira_ticket_from_tags(alert)
+        if jira_ticket:
+            return MTJIRAHandler().add_comment(jira_ticket, comment)
+
 
 def check_created_jira_ticket(alert=None):
     """ check if given alert have jira key tag
@@ -99,3 +108,10 @@ def add_jira_opsgenie_syncback(description=None, alert=None):
         append = append.format(alert['userFullName'], alert['alertId'])
         result = description + append
         return result
+
+def get_jira_ticket_from_tags(alert=None):
+    """ get jira ticket key from given alert """
+    tags = alert['tags']
+    for tag in tags:
+        if is_jira_key(tag):
+            return tag

@@ -2,9 +2,11 @@
 from jira import JIRA
 from app.controllers.mt_config_handler import MTConfigHandler
 
+
 class MTJIRA(object):
     """ Data model for jira """
     _jira = None
+
     def get_jira(self):
         """ Return jira connection from config
         if not exist init one """
@@ -18,7 +20,9 @@ class MTJIRA(object):
 
     def create_jira_ticket(self, issue_dict=None):
         """ Create jira ticket from given dict """
-        if not self._jira:
-            self.get_jira()
-        new_ticket = self._jira.create_issue(fields=issue_dict)
+        new_ticket = self.get_jira().create_issue(fields=issue_dict)
         return new_ticket.key
+
+    def add_comment(self, issue, comment):
+        """ Add a note to JIRA issue """
+        return self.get_jira().add_comment(issue, comment)

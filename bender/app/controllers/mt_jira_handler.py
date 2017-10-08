@@ -1,5 +1,7 @@
 """ Handler for all JIRA action """
 from app.models.mt_jira import MTJIRA
+from app.controllers.mt_io import print_stderr
+from jira import JIRAError
 
 
 class MTJIRAHandler(object):
@@ -30,3 +32,13 @@ class MTJIRAHandler(object):
             if 'custom' in key:
                 issue_dict[key] = value
         return self.get_jira().create_jira_ticket(issue_dict)
+
+    def add_comment(self, ticket, comment):
+        """ add a comment to jira ticket """
+        print_stderr("adding comment {} to {}".format(comment, ticket))
+        try:
+            self.get_jira().add_comment(ticket, comment)
+            return "Comment added.\n", 202
+        except JIRAError as err:
+            print_stderr(err.message)
+            return "Internal error.\n", 500

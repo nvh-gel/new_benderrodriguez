@@ -187,3 +187,65 @@ class BenderOpsgenieUnitTest(TestCase):
         alert_id = 'ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5'
         response = MTOpsgenieHandler().add_tags(alert_id=alert_id, tags='test_tag')
         assert response == "Request will be processed"
+
+    def test_opsgenie_add_note(self):
+        """ Test opsgenie alert add note handling, expect success message """
+        payload = {
+            "action": "AddNote",
+            "actorUserId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
+            "alert": {
+                "alertId": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5",
+                "alertType": 0,
+                "alias": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5",
+                "createdAt": 1506933923196,
+                "entity": "",
+                "insertedAt": 1506933923196000109,
+                "message": "[Zabbix] mylzdlivemtdb1.shdc - Free disk space is less than 12% on volume /",
+                "note": "test something",
+                "priority": 2,
+                "source": "Zabbix",
+                "tags": [
+                    "BUG-10",
+                    "BUG-11",
+                    "BUG-12",
+                    "BUG-13",
+                    "BUG-14",
+                    "BUG-15",
+                    "BUG-16",
+                    "BUG-17",
+                    "BUG-18",
+                    "BUG-19",
+                    "BUG-20",
+                    "BUG-21",
+                    "BUG-22",
+                    "BUG-23",
+                    "BUG-24",
+                    "BUG-25",
+                    "BUG-26",
+                    "BUG-27",
+                    "BUG-28",
+                    "BUG-29"
+                ],
+                "tinyId": "6757",
+                "updatedAt": 1507352982389000159,
+                "userFullName": "Hien Nguyen",
+                "userId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
+                "username": "nvhien2703@outlook.com"
+            },
+            "alertFlowContext": {
+                "content": {
+                    "alertId": "ce07a005-dcfd-4aaf-bfff-2b9ca00cdfd5"
+                },
+                "requestId": "fa1ffd45-4695-4b5a-9f68-4b10d5379960",
+                "traceId": "fa1ffd45-4695-4b5a-9f68-4b10d5379960"
+            },
+            "integrationId": "45b429ca-da65-4700-bb4c-aa3b4aacfce2",
+            "integrationName": "MT Bender Rodriguez OUT",
+            "integrationType": "Webhook",
+            "source": {
+                "name": "",
+                "type": "web"
+            }
+        }
+        response = self.app.post('/opsgenie', data=json.dumps(payload))
+        assert response.status_code == 202
