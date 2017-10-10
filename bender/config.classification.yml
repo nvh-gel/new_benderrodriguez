@@ -76,12 +76,15 @@ classification:
                 component: LEL
                 team: lel_Release
           - omsliveweb:
-              default:
+              default: &def_oms
                 <<: *default
                 component: Vertical - Order mgmt & returns
                 team: v_OM_Returns_Procurement
               details:
-                - volume /$: *def_infra
+                - volume /data:
+                    default: *def_oms
+                - volume /:
+                    default: *def_infra
           - ops-db-02.lazada.com:
               default:
                 <<: *default
@@ -89,7 +92,8 @@ classification:
                 team: h_Nms
               details:
                 - volume /$: *def_infra
-          - db: *def_infra_db
+          - db:
+              default: *def_infra_db
     - mysql:
         default: *def_infra_db
     - connection:
@@ -175,10 +179,7 @@ classification:
                 component: LMS
                 team: h_Lms
           - oms:
-              default: &def_oms
-                <<: *default
-                component: Vertical - Order mgmt & returns
-                team: v_OM_Returns_Procurement
+              default: *def_oms
           - homer:
               default: *def_oms
     - queue is having: *def_rmq
