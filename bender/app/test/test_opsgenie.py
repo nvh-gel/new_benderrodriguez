@@ -48,47 +48,45 @@ class BenderOpsgenieUnitTest(TestCase):
         response = self.app.post('/opsgenie', data=json.dumps(payload))
         assert response.status_code == 400
 
-    # def test_opsgenie_valid_create(self):
-    #     """ Test post with valid create payload """
-    #     payload = {
-    #         "action": "Create",
-    #         "alert": {
-    #             "alertId": "89b47797-bb11-4fc1-b611-492cb841e503",
-    #             "alertType": 0,
-    #             "alias": "Node 10.84.0.2:5550 for service i18n_api SG went down",
-    #             "createdAt": 1506008195937,
-    #             "entity": "",
-    #             "insertedAt": 1506008195937000103,
-    #             "message": " Node 10.84.0.2:5550 for service i18n_api SG went down",
-    #             "priority": 2,
-    #             "recipients": [],
-    #             "source": "103.56.127.16",
-    #             "tags": [
-    #                 "P0",
-    #                 "LIVE"
-    #             ],
-    #             "teams": [],
-    #             "tinyId": "1851",
-    #             "updatedAt": 1506008195937000103,
-    #             "userFullName": "System",
-    #             "userId": "",
-    #             "username": "System"
-    #         },
-    #         "alertFlowContext": {
-    #             "content": {},
-    #             "requestId": "9387e622-33f1-403c-863b-f1af245796b9",
-    #             "traceId": "9387e622-33f1-403c-863b-f1af245796b9"
-    #         },
-    #         "integrationId": "45b429ca-da65-4700-bb4c-aa3b4aacfce2",
-    #         "integrationName": "MT Bender Rodriguez OUT",
-    #         "integrationType": "Webhook",
-    #         "source": {
-    #             "name": "",
-    #             "type": "API"
-    #         }
-    #     }
-    #     response = self.app.post('/opsgenie', data=json.dumps(payload))
-    #     assert response.status_code == 202
+    def test_opsgenie_valid_create(self):
+        """ Test post with valid create payload """
+        payload = {
+            "action": "Create",
+            "actorUserId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
+            "alert": {
+                "alertId": "68cbcf70-3d39-4b99-9b79-0eb1e85a205c",
+                "alertType": 0,
+                "alias": "68cbcf70-3d39-4b99-9b79-0eb1e85a205c",
+                "createdAt": 1507738044302,
+                "entity": "",
+                "insertedAt": 1507738044302000106,
+                "message": "[Zabbix] idlzdlivedb6.iddc - Number of concurrent connections for bob_live superior to 25",
+                "priority": 4,
+                "recipients": [],
+                "source": "Zabbix",
+                "tags": [],
+                "teams": [],
+                "tinyId": "8373",
+                "updatedAt": 1507738044302000106,
+                "userFullName": "Zabbix",
+                "userId": "477266bd-da69-4ec5-95ca-f08508fbe4bb",
+                "username": "Zabbix"
+            },
+            "alertFlowContext": {
+                "content": {},
+                "requestId": "b93928c9-b29b-4b4c-a1fe-7619d83a7355",
+                "traceId": "b93928c9-b29b-4b4c-a1fe-7619d83a7355"
+            },
+            "integrationId": "45b429ca-da65-4700-bb4c-aa3b4aacfce2",
+            "integrationName": "MT Bender Rodriguez OUT",
+            "integrationType": "Webhook",
+            "source": {
+                "name": "web",
+                "type": "API"
+            }
+        }
+        response = self.app.post('/opsgenie', data=json.dumps(payload))
+        assert response.status_code == 202
 
     def test_addtojira_payload(self):
         """ test post add to jira payload to /opsgenie """

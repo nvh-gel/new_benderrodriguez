@@ -9,3 +9,28 @@ jira:
     opsgenie_alias: customfield_10041
 opsgenie:
   apikey: 5e81c312-2f6f-4f49-ad4b-56e9627325bd
+auto_escalation:
+  ticket:
+    - free disk space
+    - icmp
+    - puppet
+    - connections
+    - consumer
+    - queue is having
+    - stg
+    - dead rabbit
+    - mysql
+    - memory
+    - ilo
+    - replication delay
+  p2:
+    - stg
+    - dbdev
+    - anon
+  critical:
+    - free disk space is less than 8%
+  lvl_2:
+    - icmp for 15 mins
+    - concurrent connection
+    - available memory is less than 5%
+    - replication delay > 5000

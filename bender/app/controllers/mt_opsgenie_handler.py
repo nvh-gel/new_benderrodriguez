@@ -23,7 +23,14 @@ class MTOpsgenieHandler(object):
 
     def opsgenie_create(self, alert=None):
         """ handle opsgenie alert created event """
-        pass
+        if is_auto_action_alert(alert):
+            jira_dict = self.prepare_jira_detail_dict(alert)
+            new_ticket = MTJIRAHandler().create_jira_ticket(alert['message'],
+                                                            **jira_dict
+                                                           )
+            return self.add_tags(alert_id=alert['alertId'], tags=[new_ticket]), 202
+        else:
+            return "Nothing to do.\n", 202
 
     def opsgenie_addtojira(self, alert=None):
         """ handle opsgenie alert add to jira event """
@@ -115,3 +122,15 @@ def get_jira_ticket_from_tags(alert=None):
     for tag in tags:
         if is_jira_key(tag):
             return tag
+
+def is_auto_action_alert(alert=None):
+    """ Verify if alert require auto action or not """
+    if 'lvl_2' in alert['tags']:
+        return False
+    if '@' in alert['username']:
+        return False
+    auto_ticket_list = MTConfigHandler().get_config_section('auto_escalation')['ticket']
+    for issue in auto_ticket_list:
+        if issue in alert['message']:
+            return True
+    return False
