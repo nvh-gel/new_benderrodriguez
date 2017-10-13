@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 """ Main application """
 from flask import Flask, request
 from app.views.home import Home
 from app.views.config import Config
 from app.views.opsgenie import Opsgenie
+from app.views.classificator import Classificator
 from app.controllers.mt_io import print_stderr
 
 
@@ -33,6 +35,19 @@ def send_to_opsgenie():
     """ Allow posted payload from Opsgenie """
     payload = request.get_json(force=True)
     return Opsgenie().return_view(payload=payload)
+
+
+@BENDER.route('/classify', methods=['GET'])
+def get_classfication():
+    """ Get classification page """
+    return Classificator().return_view()
+
+
+@BENDER.route('/classify/<issue>', methods=['GET'])
+def get_classfication_detail(issue):
+    """ Check classification from given alert """
+    return Classificator().return_view(issue=issue)
+
 
 if __name__ == "__main__":
     BENDER.run(debug=True, host='0.0.0.0', port=8888)
