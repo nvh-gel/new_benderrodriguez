@@ -38,15 +38,19 @@ def send_to_opsgenie():
 
 
 @BENDER.route('/classify', methods=['GET'])
-def get_classfication():
-    """ Get classification page """
-    return Classificator().return_view()
-
-
-@BENDER.route('/classify/<issue>', methods=['GET'])
-def get_classfication_detail(issue):
-    """ Check classification from given alert """
-    return Classificator().return_view(issue=issue)
+def get_classfication_json():
+    """ Check classification from given alert and return as json """
+    # issue = request.args.get('issue') if 'issue' in request.args else None
+    # is_json = True if 'json' in request.args else False
+    issue = request.args.get('issue')
+    is_json = True if 'json' in request.args else False
+    if issue:
+        if is_json:
+            return Classificator().return_json_view(issue=issue)
+        else:
+            return Classificator().return_view(issue=issue)
+    else:
+        return Classificator().return_view()
 
 
 if __name__ == "__main__":

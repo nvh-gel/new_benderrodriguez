@@ -101,6 +101,11 @@ classification:
     - consumer: &def_rmq
         default: *default
         details:
+          - lms:
+              default:
+                <<: *default
+                component: LMS
+                team: h_Lms
           - catalog_tax_class:
               default:
                 <<: *default
@@ -157,15 +162,15 @@ classification:
                 <<: *default
                 component: Vertical - Order mgmt & returns
                 team: v_OM_Returns_Procurement
-          - product_import: &def_product_import
-              default:
+          - product_import:
+              default: &def_product_import
                 <<: *default
                 component: Product Import
                 team: v_Search_product_import
           - cc:
               default: *def_product_import
-          - elasticsearch: &def_search
-              default:
+          - elasticsearch:
+              default: &def_search
                 <<: *default
                 component: Vertical - Search
                 team: v_Search_backend
@@ -173,11 +178,6 @@ classification:
               default: *def_search
           - _update:
               default: *def_search
-          - lms:
-              default:
-                <<: *default
-                component: LMS
-                team: h_Lms
           - oms:
               default: *def_oms
           - homer:
